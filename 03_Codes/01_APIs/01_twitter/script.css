@@ -1,0 +1,28 @@
+body{
+    background-color: black;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    width: 100vw;
+}
+
+#container {
+    color: white;
+    font-family: 'Space Mono';
+    /* font-weight: bold; */
+    font-size: 32px;
+
+    width: 70vw;
+    margin: auto;
+}
+
+.elem {
+    /* align-content: center; */
+    margin: 40px 0px;
+}
+
+#created_at {
+    opacity: 0.5;
+    font-size: 24px;
+}

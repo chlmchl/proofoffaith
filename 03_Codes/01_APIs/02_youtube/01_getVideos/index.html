@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]>      <html class="no-js"> <![endif]-->
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title></title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="style.css">
+  </head>
+  <body>
+    <script src="https://apis.google.com/js/api.js"></script>
+    <script>
+      /**
+       * Sample JavaScript code for youtube.search.list
+       * See instructions for running APIs Explorer code samples locally:
+       * https://developers.google.com/explorer-help/code-samples#javascript
+       */
+      var videos = [];
+      var i = 0;
+      
+
+      function authenticate() {
+        return gapi.auth2.getAuthInstance()
+            .signIn({scope: "https://www.googleapis.com/auth/youtube.readonly"})
+            .then(function() { console.log("Sign-in successful"); },
+                  function(err) { console.error("Error signing in", err); });
+      }
+      function loadClient() {
+        gapi.client.setApiKey("AIzaSyDa7vpFgeOxqeNgHUjCqxC5kkrSUphuN5k");
+        return gapi.client.load("https://www.googleapis.com/discovery/v1/apis/youtube/v3/rest")
+            .then(function() { console.log("GAPI client loaded for API"); },
+                  function(err) { console.error("Error loading GAPI client for API", err); });
+      }
+      // Make sure the client is loaded and sign-in is complete before calling this method.
+      function execute() {
+        return gapi.client.youtube.search.list({
+          "eventType": "live",
+          "maxResults": 10,
+          "q": "global warming",
+          "type": [
+            "video"
+          ]
+        })
+            .then(function(response) {
+                    // Handle the results here (response.result has the parsed body).
+                    console.log("Response", Object.entries(response.result.items));
+                    
+                    
+                    var data = response.result.items;
+                    for(var i=0; i < data.length;i++){
+                      //console.log(data[i].id.videoId);
+                      videos.push(data[i].id.videoId)
+                      //document.getElementById('ytvid').innerHTML = '<iframe width="1920" height="1080" src="https://www.youtube.com/embed/'+ data[i].id.videoId +'?autoplay=1&enablejsapi=1" title="YouTube video player" frameborder="0" autoplay="1" allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>';
+
+                    }
+                    console.log(videos);
+                    //for(var i = 0; i < videos.length; i++) {
+                      //console.log("add video " + i + '/' + videos.length);
+                      document.getElementById('ytvid').innerHTML = '<iframe width="1920" height="1080" src="https://www.youtube.com/embed/'+ videos[0] +'?autoplay=1&enablejsapi=1" title="YouTube video player" frameborder="0" autoplay="1" allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>';
+                    //}
+                  },
+                  function(err) { console.error("Execute error", err); });
+      }
+      gapi.load("client:auth2", function() {
+        gapi.auth2.init({client_id: "1007240164365-daurh8otdalhfd3dh6gpdp6anh2jbqoi.apps.googleusercontent.com"});
+      });
+
+      function next() {
+        if(i <= videos.length - 1) {
+          i += 1;
+          document.getElementById('ytvid').innerHTML = '<iframe width="1920" height="1080" src="https://www.youtube.com/embed/'+ videos[i] +'?autoplay=1&enablejsapi=1" title="YouTube video player" frameborder="0" autoplay="1" allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>';
+          console.log('video ' + i)
+        } 
+        else if(i = videos.length) {
+          i = -1;
+        }
+      }
+    </script>
+    <button onclick="authenticate().then(loadClient)">authorize and load</button>
+    <button onclick="execute()">execute</button>
+    <button onclick="next()">next</button>
+    
+    <div id="ytvid"></div>
+    
+  </body>
+</html>
