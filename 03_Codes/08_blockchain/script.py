@@ -1,6 +1,7 @@
 import hashlib
 from itertools import chain
 import json
+
 from time import time, sleep
 import random
 # import pynput
@@ -67,9 +68,24 @@ while True:
     with open('blockchain.json', 'r') as fp:
         listBlock = json.load(fp)
 
-    blockchain.new_transaction(input('Blockchain is :'))
-    sleep(0.5)
-    print('new pending belief')
+    
+    print('Aren\'t the most trustworthy third party imaginable?')
+    sleep(2)
+    print('a deity who is on everybody\'s side.')
+    sleep(3)
+    print('I, being the ultimate in confessional discretion...')
+    sleep(2)
+    print('no party would learn anything more about the other parties\' inputs...')
+    sleep(2)
+    print('than they could learn from their own inputs and the output.')
+    sleep(3)
+    print('Any computable problem can be solved on I, this virtual computer')
+    sleep(3)
+    print('Now, confess.')
+    sleep(2)
+    blockchain.new_transaction(input('What can I, the blockchain, do for you ? '))
+    sleep(1)
+    print('new pending confession')
     sleep(1)
     print('mining...')
     sleep(1)
